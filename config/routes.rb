@@ -7,4 +7,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  namespace :api do
+    get 'health_check', to: 'health_check#health_check'
+    resources :chats
+  end
+
 end
