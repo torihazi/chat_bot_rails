@@ -1,0 +1,34 @@
+# docker-compose.rails.yml
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    environment:
+      - PYTHON_SERVER_URL=http://ai_server:5001
+    networks:
+      - chat_network
+
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - chat_network    
+
+volumes:
+  postgres_data:
+
+networks:
+  chat_network:
+    external: true
